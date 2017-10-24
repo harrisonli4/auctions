@@ -50,7 +50,11 @@ class Spudbb:
         returns a list of utilities per slot.
         """
         info = self.slot_info(t, history, reserve)
-        utilities = [0.75 ** j * (self.value - info[j][1]) for j in range(len(info))] 
+        prev_round = history.round(t-1)
+       # other_bids = filter(lambda (a_id, b): a_id != self.id, prev_round.bids)
+
+        clicks = prev_round.clicks
+        utilities = [clicks[j] * (self.value - info[j][1]) for j in range(len(info))] 
 
         return utilities
 
@@ -79,12 +83,12 @@ class Spudbb:
 
         prev_round = history.round(t-1)
         (slot, min_bid, max_bid) = self.target_slot(t, history, reserve)
-
+        clicks = prev_round.clicks
         # Target slot is top slot or target min_bid is greater than value
         if (slot == 0) or (min_bid >= self.value):
             bid = self.value
         else:
-            bid = self.value - 0.75 * (self.value - min_bid)
+            bid = self.value - (float(clicks[slot]) / clicks[slot-1]) * (self.value - min_bid)
         
         return bid
 
