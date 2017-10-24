@@ -52,6 +52,18 @@ class VCG:
             c = slot_clicks
             n = len(allocation)
 
+            if (k == n-1):
+                # There exists bid above the reserve price that was not allocated at all due to number of slots
+                if len(valid_bids) > n:
+                    pmt = (c[k]) * valid_bids[k+1][1]
+                    return pmt
+                else:
+                    pmt = (c[k]) * reserve
+                    return pmt
+            else:
+                pmt = (c[k] - c[k+1]) * allocated_bids[k+1][1] + total_payment(k+1)
+                return pmt
+
             # TODO: Compute the payment and return it.
 
         def norm(totals):
