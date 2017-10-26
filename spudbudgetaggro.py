@@ -6,7 +6,7 @@ from gsp import GSP
 from util import argmax_index
 import math
 
-class Spudbudget:
+class Spudbudgetaggro:
     """Balanced bidding agent"""
     def __init__(self, id, value, budget):
         self.id = id
@@ -89,10 +89,11 @@ class Spudbudget:
         if (slot == 0) or (min_bid >= self.value):
             bid = self.value
         else:
-            bid = self.value - (float(clicks[slot]) / clicks[slot-1]) * (self.value - min_bid)
-            # bid = max_bid
+            # bid = self.value - (float(clicks[slot]) / clicks[slot-1]) * (self.value - min_bid)
+            bid = max_bid
         
         ratio = (30*math.cos(math.pi*t/24) + 50)/80
+        # ratio = 1
         return bid * ratio
 
     def __repr__(self):
