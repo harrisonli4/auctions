@@ -89,10 +89,16 @@ class Spudbudgetaggro:
         if (slot == 0) or (min_bid >= self.value):
             bid = self.value
         else:
-            # bid = self.value - (float(clicks[slot]) / clicks[slot-1]) * (self.value - min_bid)
-            bid = max_bid
-        
+            bid = self.value - (float(clicks[slot]) / clicks[slot-1]) * (self.value - min_bid)
+            # bid = max_bid
         ratio = (30*math.cos(math.pi*t/24) + 50)/80
+
+
+
+        if self.value > 120:
+            ratio = (3*math.cos(math.pi*t/24) + 10)/20
+        # if self.value > 155:
+        #     ratio = (2*math.cos(math.pi*t/24) + 8)/20
         # ratio = 1
         return bid * ratio
 

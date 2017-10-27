@@ -90,9 +90,12 @@ class Spudbudget:
             bid = self.value
         else:
             bid = self.value - (float(clicks[slot]) / clicks[slot-1]) * (self.value - min_bid)
-            # bid = max_bid
-        
+
         ratio = (30*math.cos(math.pi*t/24) + 50)/80
+
+        if self.value > 120:
+            ratio = (3*math.cos(math.pi*t/24) + 10)/20
+
         return bid * ratio
 
     def __repr__(self):
